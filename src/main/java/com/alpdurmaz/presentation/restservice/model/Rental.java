@@ -1,4 +1,4 @@
-package com.alpdurmaz.presentation.restcontroller;
+package com.alpdurmaz.presentation.restservice.model;
 
 public class Rental {
 

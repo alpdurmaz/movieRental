@@ -1,5 +1,6 @@
-package com.alpdurmaz.logic.model;
+package com.alpdurmaz.logic.user;
 
+import com.alpdurmaz.logic.userrole.Role;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -36,6 +37,15 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    public User() {
+    }
+
+    public User(int id, @Email(message = "*Please provide a valid Email") @NotEmpty(message = "*Please provide an email") String email, @Length(min = 5, message = "*Your password must have at least 5 characters") @NotEmpty(message = "*Please provide your password") String password) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+    }
 
     public int getId() {
         return id;

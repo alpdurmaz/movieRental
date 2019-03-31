@@ -1,7 +1,7 @@
-package com.alpdurmaz.presentation.restcontroller;
+package com.alpdurmaz.presentation.restservice.controller;
 
 import com.alpdurmaz.logic.rental.RentalService;
-import com.alpdurmaz.logic.rental.Rentals;
+import com.alpdurmaz.presentation.restservice.model.Rental;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,13 +13,14 @@ public class RentalRestController {
     @Autowired
     private RentalService rentalService;
 
-    @RequestMapping("/api/rentals")
-    public List<Rentals> getRentals (@RequestParam String customerName){
+    @GetMapping("/api/rentals")
+    public List<com.alpdurmaz.logic.rental.Rental> getRentals (@RequestParam String customerName){
        return rentalService.getRentals(customerName);
     }
 
     @PostMapping("/api/rentmovie")
     public void rentMovie(@RequestBody Rental rental){
-        rentalService.rentMovie(rental);
+
+        rentalService.rentMovie(rental.getCustomerID(), rental.getMovieID());
     }
 }

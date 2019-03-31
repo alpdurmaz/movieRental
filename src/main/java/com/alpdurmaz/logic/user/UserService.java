@@ -1,10 +1,8 @@
 package com.alpdurmaz.logic.user;
 
 
-import com.alpdurmaz.logic.model.Role;
-import com.alpdurmaz.logic.model.User;
-import com.alpdurmaz.logic.model.RoleRepository;
-import com.alpdurmaz.logic.model.UserRepository;
+import com.alpdurmaz.logic.userrole.Role;
+import com.alpdurmaz.logic.userrole.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,21 +13,21 @@ import java.util.HashSet;
 @Service("userService")
 public class UserService {
 
-    private UserRepository userRepository;
+    private UserLoginRepository userLoginRepository;
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository,
+    public UserService(UserLoginRepository userLoginRepository,
                        RoleRepository roleRepository,
                        BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userRepository = userRepository;
+        this.userLoginRepository = userLoginRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public User findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public User findByEmail(String email) {
+        return userLoginRepository.findByEmail(email);
     }
 
     public void saveUser(User user) {
@@ -37,7 +35,12 @@ public class UserService {
         user.setActive(1);
         Role userRole = roleRepository.findByRole("ADMIN");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-        userRepository.save(user);
+        userLoginRepository.save(user);
+    }
+
+    public boolean validatePassword(String inputPassword,String userPassword){
+
+        return bCryptPasswordEncoder.matches(inputPassword,userPassword);
     }
 
 }

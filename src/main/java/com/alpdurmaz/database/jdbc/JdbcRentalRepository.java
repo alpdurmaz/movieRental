@@ -1,14 +1,23 @@
 package com.alpdurmaz.database.jdbc;
 
-import com.alpdurmaz.logic.customer.Customer;
-import com.alpdurmaz.logic.movie.Movie;
+import com.alpdurmaz.logic.exceptions.MovieRentFailedException;
+import com.alpdurmaz.logic.exceptions.MovieReturnFailedException;
+import com.alpdurmaz.logic.exceptions.RentalListException;
 import com.alpdurmaz.logic.rental.RentalRepository;
-import com.alpdurmaz.logic.rental.Rentals;
+import com.alpdurmaz.logic.rental.Rental;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
+
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,74 +25,98 @@ import java.util.List;
 public class JdbcRentalRepository implements RentalRepository {
 
     @Autowired
-    NamedParameterJdbcTemplate jdbcTemplate;
+    private NamedParameterJdbcTemplate namParJdbcTemplate;
 
-    /*
-    @Override
-    public void rentMovie(CustomerDAO customer, Movie movie) {
-        String rentDate = LocalDate.now().toString();
-        String returnDate = "1900-01-01";
-
-        jdbcTemplate.update("INSERT INTO RENTALS (R_M_ID, R_C_ID, R_RENTAL_DATE, R_RETURN_DATE) VALUES(:movieID," +
-                ":customerID,:rentDate,:returnDate)", new MapSqlParameterSource()
-                .addValue("movieID", movie.getMovieID())
-                .addValue("customerID", customer.getCustomerID())
-                .addValue("rentDate", rentDate)
-                .addValue("returnDate", returnDate));
-
-    }
-    */
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Override
-    public void rentMovie(int customerID, int movieID) {
+    public void rentMovie(int userId, int movieId) {
         String rentDate = LocalDate.now().toString();
         String returnDate = "1900-01-01";
 
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("movieID", movieID);
-        mapSqlParameterSource.addValue("customerID", customerID);
+        mapSqlParameterSource.addValue("movieID", movieId);
+        mapSqlParameterSource.addValue("customerID", userId);
         mapSqlParameterSource.addValue("rentDate", rentDate);
         mapSqlParameterSource.addValue("returnDate", returnDate);
 
-
-        jdbcTemplate.update("INSERT INTO RENTALS (R_M_ID, R_C_ID, R_RENTAL_DATE, R_RETURN_DATE) VALUES(:movieID," +
-                ":customerID,:rentDate,:returnDate)", mapSqlParameterSource);
-
+        try {
+            namParJdbcTemplate.update("INSERT INTO RENTALS (R_M_ID, R_C_ID, R_RENTAL_DATE, R_RETURN_DATE) VALUES(:movieID," +
+                    ":customerID,:rentDate,:returnDate)", mapSqlParameterSource);
+        }
+        catch (DataAccessException dae){
+            throw new MovieRentFailedException("Movie Rent Failed!", dae);
+        }
     }
 
     @Override
-    public void returnRentedMovie(Customer customer, Movie movie) {
+    public void returnRentedMovie(int userId, int movieId) {
 
         String today = LocalDate.now().toString();
         String returnDate = "1900-01-01";
 
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("today", today);
-        mapSqlParameterSource.addValue("movieId", movie.getMovieID());
-        mapSqlParameterSource.addValue("customerId", customer.getCustomerID());
+        mapSqlParameterSource.addValue("movieId", movieId);
+        mapSqlParameterSource.addValue("customerId", userId);
         mapSqlParameterSource.addValue("returnDate", returnDate);
 
-        jdbcTemplate.update("UPDATE RENTALS SET R_RETURN_DATE=:today WHERE R_M_ID=:movieId AND R_C_ID=:customerId AND R_RETURN_DATE=:returnDate;", mapSqlParameterSource);
+        try {
+            namParJdbcTemplate
+                    .update("UPDATE RENTALS SET R_RETURN_DATE=:today WHERE R_M_ID=:movieId AND" +
+                            " R_C_ID=:customerId AND R_RETURN_DATE=:returnDate;", mapSqlParameterSource);
+        }catch (DataAccessException dae){
+            throw new MovieReturnFailedException("Movie Return Operation Failed!", dae);
+        }
     }
 
     @Override
-    public List<Rentals> getRentals(String customerName) {
+    public void returnRentedMovie(List<Integer> list) {
+
+        String today = LocalDate.now().toString();
+
+        String sqlCommand = "UPDATE RENTALS SET R_RETURN_DATE=? WHERE RENTAL_ID=?;";
+
+        try {
+
+            jdbcTemplate.batchUpdate(sqlCommand, new BatchPreparedStatementSetter() {
+                @Override
+                public void setValues(PreparedStatement ps, int i) throws SQLException {
+
+                    ps.setString(1, today);
+                    ps.setInt(2, list.get(i).intValue());
+                }
+
+                @Override
+                public int getBatchSize() {
+                    return list.size();
+                }
+            });
+        }catch (DataAccessException dae){
+            throw new MovieReturnFailedException("Movie Return Operation Failed!", dae);
+        }
+    }
+
+    @Override
+    public List<Rental> getRentals(String customerName) {
 
         String returnDate = "1900-01-01";
 
-        RowMapper<Rentals> rentalsRowMapper = (rs, num) -> new Rentals(rs.getString("C_NAME"),
-                rs.getString("M_TITLE"), rs.getString("R_RENTAL_DATE"), rs.getString("R_RETURN_DATE"));
+        RowMapper<Rental> rentalsRowMapper = (rs, num) -> new Rental(rs.getString("email"),
+                rs.getString("M_TITLE"), rs.getString("R_RENTAL_DATE"), rs.getString("R_RETURN_DATE"), rs.getInt("RENTAL_ID"));
 
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("customerName", customerName);
         mapSqlParameterSource.addValue("returnDate", returnDate);
 
-        List<Rentals> rentalsList =
-
-                jdbcTemplate.query("SELECT DISTINCT C_NAME, M_TITLE, R_RENTAL_DATE, R_RETURN_DATE FROM CUSTOMERS, MOVIES, RENTALS " +
-                        "WHERE R_M_ID=M_ID AND R_C_ID=C_ID AND C_NAME=:customerName AND R_RETURN_DATE=:returnDate", mapSqlParameterSource, rentalsRowMapper);
-
-        return rentalsList;
+        try {
+            return namParJdbcTemplate
+                    .query("SELECT email, M_TITLE, R_RENTAL_DATE, R_RETURN_DATE, RENTAL_ID FROM user, MOVIES, RENTALS " +
+                                    "WHERE R_M_ID=M_ID AND R_C_ID=user_id AND email=:customerName AND R_RETURN_DATE=:returnDate",
+                            mapSqlParameterSource, rentalsRowMapper);
+        }catch (DataAccessException dae){
+            throw new RentalListException("Rental List Not Found", dae);
+        }
     }
-
 }

@@ -1,14 +1,13 @@
-package com.alpdurmaz.presentation;
+package com.alpdurmaz.presentation.console;
 
 import com.alpdurmaz.logic.customer.Customer;
 import com.alpdurmaz.logic.customer.CustomerService;
 import com.alpdurmaz.logic.movie.Movie;
 import com.alpdurmaz.logic.movie.MovieService;
 import com.alpdurmaz.logic.rental.RentalService;
-import com.alpdurmaz.logic.rental.Rentals;
-import com.alpdurmaz.presentation.restcontroller.MovieAPI;
-import com.alpdurmaz.presentation.restcontroller.MovieDetailAPI;
-import com.alpdurmaz.presentation.restcontroller.Rental;
+import com.alpdurmaz.logic.rental.Rental;
+import com.alpdurmaz.presentation.restservice.model.MovieAPI;
+import com.alpdurmaz.presentation.restservice.model.MovieDetailAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +16,7 @@ import java.util.Scanner;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class Display {
+public class ConsoleView {
     private Scanner scanner = new Scanner(System.in);
 
     @Autowired
@@ -104,30 +103,28 @@ public class Display {
         String movieTitle = getKeyboardInput();
         Movie movie = movieService.getMovieByTitle(movieTitle);
 
-        Rental rental = new Rental(customer.getCustomerID(), movie.getMovieID());
-
-        rentalService.rentMovie(rental);
+        rentalService.rentMovie(customer.getCustomerID(), movie.getMovieID());
     }
 
     private void returnMovie() {
         System.out.println("****************************");
         System.out.println("3 - RETURN MOVIE");
-        System.out.println("Please Insert Your Name to Display Rentals");
+        System.out.println("Please Insert Your Name to ConsoleView Rental");
 
         String customerName = getKeyboardInput();
         Customer customer = customerService.getCustomerByName(customerName);
-        List<Rentals>rentalsList = rentalService.getRentals(customerName);
+        List<Rental> rentalList = rentalService.getRentals(customerName);
 
-        displayList(rentalsList);
+        displayList(rentalList);
 
         System.out.println("Please Insert Movie Title You Want to Return");
         String movieTitle = getKeyboardInput();
         Movie movie = movieService.getMovieByTitle(movieTitle);
-        rentalService.returnRentedMovie(customer, movie);
+        rentalService.returnRentedMovie(customer.getCustomerID(), movie.getMovieID());
         
-        rentalsList = rentalService.getRentals(customerName);
+        rentalList = rentalService.getRentals(customerName);
 
-        displayList(rentalsList);
+        displayList(rentalList);
 
     }
 
@@ -139,7 +136,7 @@ public class Display {
 
         MovieAPI movieAPI = restTemplate.getForObject("http://www.omdbapi.com/?t=" + movieTitleParameter + "&apikey=ec66d13", MovieAPI.class);
 
-        movieService.insertMovie(movieAPI);
+       // movieService.insertMovie(movieAPI);
 
     }
 

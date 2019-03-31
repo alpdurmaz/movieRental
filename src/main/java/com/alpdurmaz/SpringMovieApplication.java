@@ -1,6 +1,6 @@
 package com.alpdurmaz;
 
-import com.alpdurmaz.presentation.Display;
+import com.alpdurmaz.presentation.console.ConsoleView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,7 +14,7 @@ public class SpringMovieApplication implements CommandLineRunner {
     JdbcTemplate jdbcTemplate;
 
     @Autowired
-    private Display display;
+    private ConsoleView consoleView;
 
     public static void main(String[] args) {
         SpringApplication.run(SpringMovieApplication.class, args);
@@ -22,6 +22,6 @@ public class SpringMovieApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        display.displayMain();
+        consoleView.displayMain();
     }
 }

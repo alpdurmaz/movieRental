@@ -1,7 +1,7 @@
 package com.alpdurmaz.logic.movie;
 
-import com.alpdurmaz.presentation.restcontroller.MovieAPI;
-import com.alpdurmaz.presentation.restcontroller.MovieDetailAPI;
+import com.alpdurmaz.presentation.restservice.model.MovieAPI;
+import com.alpdurmaz.presentation.restservice.model.MovieDetailAPI;
 
 import java.util.List;
 

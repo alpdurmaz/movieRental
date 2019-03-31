@@ -1,6 +1,5 @@
-package com.alpdurmaz.logic.model;
+package com.alpdurmaz.logic.userrole;
 
-import com.alpdurmaz.logic.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

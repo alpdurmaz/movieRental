@@ -12,6 +12,7 @@
 <body>
 
 <div th:replace="/fragments/navBarFragment :: navBarFragment"></div>
+
 <p th:text="${username}"/>
 <form action="#" th:action="@{/rent-movie}" th:object="${rentalRequest}" method="post">
 

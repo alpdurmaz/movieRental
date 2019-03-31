@@ -2,8 +2,8 @@ package com.alpdurmaz.database.db;
 
 import com.alpdurmaz.logic.customer.Customer;
 import com.alpdurmaz.logic.movie.Movie;
+import com.alpdurmaz.logic.rental.Rental;
 import com.alpdurmaz.logic.rental.RentalRepository;
-import com.alpdurmaz.logic.rental.Rentals;
 import com.alpdurmaz.database.DbConnection;
 
 import java.sql.DriverManager;
@@ -47,7 +47,7 @@ public class DbRentalRepository implements RentalRepository {
         }
     }
 
-    @Override
+
     public void returnRentedMovie(Customer customer, Movie returnedMovie){
 
         PreparedStatement preparedStatement = null;
@@ -73,13 +73,13 @@ public class DbRentalRepository implements RentalRepository {
     }
 
     @Override
-    public List<Rentals> getRentals(String customerName) {
+    public List<Rental> getRentals(String customerName) {
         return null;
     }
 
-    public List<Rentals> getRentals(Customer customer){
+    public List<Rental> getRentals(Customer customer){
 
-        List<Rentals> rentalList = new ArrayList();
+        List<Rental> rentalList = new ArrayList();
 
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -91,12 +91,12 @@ public class DbRentalRepository implements RentalRepository {
             resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()){
-                Rentals rentals = new Rentals();
-                rentals.setCustomerName(resultSet.getString("C_NAME"));
-                rentals.setMovieTitle(resultSet.getNString("M_TITLE"));
-                rentals.setRentalDate(resultSet.getString("R_RENTAL_DATE"));
-                rentals.setReturnDate(resultSet.getString("R_RETURN_DATE"));
-                rentalList.add(rentals);
+                Rental rental = new Rental();
+                rental.setEmail(resultSet.getString("C_NAME"));
+                rental.setMovieTitle(resultSet.getNString("M_TITLE"));
+                rental.setRentalDate(resultSet.getString("R_RENTAL_DATE"));
+                rental.setReturnDate(resultSet.getString("R_RETURN_DATE"));
+                rentalList.add(rental);
             }
 
             return rentalList;
@@ -118,4 +118,15 @@ public class DbRentalRepository implements RentalRepository {
     public void rentMovie(int customerID, int movieID) {
 
     }
+
+    @Override
+    public void returnRentedMovie(int userId, int movieId) {
+
+    }
+
+    @Override
+    public void returnRentedMovie(List<Integer> list) {
+
+    }
+
 }

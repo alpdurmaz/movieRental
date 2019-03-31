@@ -11,7 +11,7 @@
 </head>
 <body>
 <form action="#" th:action="@{/rentamovie}" th:object="${rentalRequest}" method="post">
-    <p>Customer Name:<input type="text" th:field="*{customerName}"/></p>
+    <p>Customer Name:<input type="text" th:field="*{email}"/></p>
     <p>Movie Title:<input type="text" th:field="*{movieTitle}"/></p>
     <p><input type="submit" value="Submit"/></p>
 </form>

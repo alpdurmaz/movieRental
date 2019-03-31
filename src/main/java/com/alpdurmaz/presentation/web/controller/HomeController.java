@@ -1,11 +1,17 @@
-package com.alpdurmaz.presentation.web;
+package com.alpdurmaz.presentation.web.controller;
 
 
 import com.alpdurmaz.logic.customer.CustomerService;
 import com.alpdurmaz.logic.movie.Movie;
 import com.alpdurmaz.logic.movie.MovieService;
+import com.alpdurmaz.logic.rental.Rental;
 import com.alpdurmaz.logic.rental.RentalService;
-import com.alpdurmaz.presentation.restcontroller.Rental;
+import com.alpdurmaz.logic.user.User;
+import com.alpdurmaz.logic.user.UserService;
+import com.alpdurmaz.presentation.web.model.RentalRequest;
+import com.alpdurmaz.presentation.web.model.ReturnMovieRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +24,11 @@ import java.util.List;
 
 @Controller
 public class HomeController {
+
+    private final static Logger logger = LoggerFactory.getLogger(HomeController.class);
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private CustomerService customerService;
@@ -59,12 +70,11 @@ public class HomeController {
     @PostMapping("/rent-movie")
     public String rentMovie(@ModelAttribute RentalRequest rentalRequest, Principal principal){
 
-        int customerId = customerService.getCustomerByName(principal.getName()).getCustomerID();
+        int userId = userService.findByEmail(principal.getName()).getId();
+
         int movieId = movieService.getMovieByTitle(rentalRequest.getMovieTitle()).getMovieID();
 
-        Rental rental = new Rental(customerId, movieId);
-
-        rentalService.rentMovie(rental);
+        rentalService.rentMovie(userId, movieId);
 
         return "rentMovie";
     }
@@ -72,8 +82,23 @@ public class HomeController {
     @GetMapping("/return-movie")
     public String returnMovie(Principal principal, Model model){
 
+        model.addAttribute("returnMovieRequest", new ReturnMovieRequest());
        model.addAttribute("rentalList", rentalService.getRentals(principal.getName()));
 
        return "returnMovie";
     }
+
+    @PostMapping("/return-movie")
+    public String returnMovie(@ModelAttribute ReturnMovieRequest returnMovieRequest){
+
+        logger.info("LIST SIZE IS  : " + returnMovieRequest.getRentalIdList().size());
+
+        List<Integer> rentalIdList = returnMovieRequest.getRentalIdList();
+
+        rentalService.returnRentedMovie(rentalIdList);
+
+        return "returnMovie";
+    }
+
+
 }

@@ -1,4 +1,4 @@
-package com.alpdurmaz.presentation.web;
+package com.alpdurmaz.presentation.web.model;
 
 public class RentalRequest {
     private String movieTitle;

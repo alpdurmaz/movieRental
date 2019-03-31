@@ -6,7 +6,7 @@ plugins {
 apply plugin: 'io.spring.dependency-management'
 
 bootJar {
-    baseName = 'gs-restcontroller-user'
+    baseName = 'gs-restservice-user'
     version =  '0.1.0'
 }
 

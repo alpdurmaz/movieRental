@@ -11,8 +11,8 @@
 </head>
 <body>
 
-<form action="#" th:action="@{/returnmovie}" th:object="${rentalsList}" method="post">
-    <p>Customer Name:<input type="text" th:field="*{customerName}"/></p>
+<form action="#" th:action="@{/returnmovie}" th:object="${rentalList}" method="post">
+    <p>Customer Name:<input type="text" th:field="*{email}"/></p>
     <p>Movie Title:<input type="text" th:field="*{movieTitle}"/></p>
     <p><input type="submit" value="Submit"/></p>
 </form>

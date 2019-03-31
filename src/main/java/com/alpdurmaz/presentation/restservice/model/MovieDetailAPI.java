@@ -1,4 +1,4 @@
-package com.alpdurmaz.presentation.restcontroller;
+package com.alpdurmaz.presentation.restservice.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -12,8 +12,8 @@
 <body>
 
 <nav class="navbar navbar-light bg-light">
-    <form class="form-inline" action="#" th:action="@{/list-customer-rentals}" th:object="${rentals}" method="get">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" th:field="*{customerName}">
+    <form class="form-inline" action="#" th:action="@{/list-customer-rental}" th:object="${rental}" method="get">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" th:field="*{email}">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 </nav>
@@ -28,14 +28,14 @@
         </tr>
     </thehead>
     <tbody>
-    <tr th:if="${rentalsList.empty}">
+    <tr th:if="${rentalList.empty}">
         <td colspan="2"> You don`t have any movies to return.</td>
     </tr>
-    <tr th:each="rentals : ${rentalsList}">
-        <td><span th:text="${rentals.customerName}"></span></td>
-        <td><span th:text="${rentals.movieTitle}"></span></td>
-        <td><span th:text="${rentals.rentalDate}"></span></td>
-        <td><span th:text="${rentals.returnDate}"></span></td>
+    <tr th:each="rental : ${rentalList}">
+        <td><span th:text="${rental.email}"></span></td>
+        <td><span th:text="${rental.movieTitle}"></span></td>
+        <td><span th:text="${rental.rentalDate}"></span></td>
+        <td><span th:text="${rental.returnDate}"></span></td>
     </tr>
     </tbody>
 </table>

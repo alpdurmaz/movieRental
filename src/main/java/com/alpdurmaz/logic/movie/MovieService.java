@@ -1,8 +1,6 @@
 package com.alpdurmaz.logic.movie;
 
-import com.alpdurmaz.logic.NoObjectFoundException;
-import com.alpdurmaz.presentation.restcontroller.MovieAPI;
-import com.alpdurmaz.presentation.restcontroller.MovieDetailAPI;
+import com.alpdurmaz.presentation.restservice.model.MovieDetailAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -21,10 +19,6 @@ public class MovieService {
     public Movie getMovieByTitle(String title){
 
         Movie movie = movieRepository.getMovieByTitle(title);
-
-        if(movie == null){
-            throw new NoObjectFoundException("Movie Not Found");
-        }
 
         return movie;
     }
@@ -52,10 +46,6 @@ public class MovieService {
     public List<Movie> getMovies(){
 
         List<Movie> movieList = movieRepository.getMovies();
-
-        if(movieList.size() == 0){
-            throw new NoObjectFoundException("There Are No Movies At List");
-        }
 
         return movieRepository.getMovies();
     }
