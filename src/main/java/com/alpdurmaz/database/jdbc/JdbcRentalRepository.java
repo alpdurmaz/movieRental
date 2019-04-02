@@ -1,8 +1,8 @@
 package com.alpdurmaz.database.jdbc;
 
-import com.alpdurmaz.logic.exceptions.MovieRentFailedException;
-import com.alpdurmaz.logic.exceptions.MovieReturnFailedException;
-import com.alpdurmaz.logic.exceptions.RentalListException;
+import com.alpdurmaz.logic.exception.exceptions.MovieRentFailedException;
+import com.alpdurmaz.logic.exception.exceptions.MovieReturnFailedException;
+import com.alpdurmaz.logic.exception.exceptions.RentalListException;
 import com.alpdurmaz.logic.rental.RentalRepository;
 import com.alpdurmaz.logic.rental.Rental;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 

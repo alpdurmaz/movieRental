@@ -44,11 +44,6 @@ public class HomeController {
         return "home";
     }
 
-//    @GetMapping("/login")
-//    public String login(){
-//        return "login";
-//    }
-
     @GetMapping("/list-all-movies")
     public String getAllMovies(Model model){
 

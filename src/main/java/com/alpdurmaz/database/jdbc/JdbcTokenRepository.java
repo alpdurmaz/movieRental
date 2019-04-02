@@ -1,6 +1,6 @@
 package com.alpdurmaz.database.jdbc;
 
-import com.alpdurmaz.presentation.exception.exceptions.NoTokenFoundException;
+import com.alpdurmaz.presentation.exceptions.NoTokenFoundException;
 import com.alpdurmaz.logic.user.User;
 import com.alpdurmaz.logic.token.TokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,8 +6,8 @@ import com.alpdurmaz.logic.movie.Movie;
 import com.alpdurmaz.logic.movie.MovieService;
 import com.alpdurmaz.logic.rental.RentalService;
 import com.alpdurmaz.logic.rental.Rental;
-import com.alpdurmaz.presentation.restservice.model.MovieAPI;
-import com.alpdurmaz.presentation.restservice.model.MovieDetailAPI;
+import com.alpdurmaz.presentation.restservice.models.restmodels.MovieAPI;
+import com.alpdurmaz.presentation.restservice.models.restmodels.MovieDetailAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

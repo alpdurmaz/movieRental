@@ -1,10 +1,10 @@
 package com.alpdurmaz.presentation.restservice.controller;
 
-import com.alpdurmaz.presentation.exception.exceptions.NoTokenFoundException;
+import com.alpdurmaz.presentation.exceptions.NoTokenFoundException;
 import com.alpdurmaz.logic.movie.Movie;
 import com.alpdurmaz.logic.movie.MovieService;
 import com.alpdurmaz.logic.token.TokenService;
-import com.alpdurmaz.presentation.restservice.model.MovieDetailAPI;
+import com.alpdurmaz.presentation.restservice.models.restmodels.MovieDetailAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +28,7 @@ public class MovieRestController {
     @Autowired
     private MovieService movieService;
 
-    @GetMapping("/api/getmovie")
+    @GetMapping("/rest/getmovie")
     public Movie getMovieByTitle(@RequestParam String title) {
 
         Movie movie = movieService.getMovieByTitle(title);
@@ -36,7 +36,7 @@ public class MovieRestController {
         return movie;
     }
 
-    @PostMapping("/api/insertmovie")
+    @PostMapping("/rest/insertmovie")
     public void insertMovie(@RequestParam String title){
 
         title = title.trim().replace(" ", "+");
@@ -44,7 +44,7 @@ public class MovieRestController {
         movieService.insertMovie(title);
     }
 
-    @GetMapping("/api/movieinfo")
+    @GetMapping("/rest/movieinfo")
     public MovieDetailAPI movieInfo(@RequestParam String title){
 
         title = title.trim().replace(" ", "+");
@@ -52,14 +52,9 @@ public class MovieRestController {
         return movieService.getMovieDetail(title);
     }
 
-    @GetMapping("/api/movielist")
-    public ResponseEntity<List<Movie>> getMovies(@RequestParam String token){
+    @GetMapping("/rest/movielist")
+    public ResponseEntity<List<Movie>> getMovies(){
 
-        try{
-            tokenService.searchToken(token);
-        }catch (NoTokenFoundException e){
-            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.FORBIDDEN);
-        }
 
         return new ResponseEntity<>(movieService.getMovies(), HttpStatus.OK);
     }

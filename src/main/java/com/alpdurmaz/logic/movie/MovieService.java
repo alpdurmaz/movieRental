@@ -1,6 +1,6 @@
 package com.alpdurmaz.logic.movie;
 
-import com.alpdurmaz.presentation.restservice.model.MovieDetailAPI;
+import com.alpdurmaz.presentation.restservice.models.restmodels.MovieDetailAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

@@ -1,12 +1,12 @@
 package com.alpdurmaz.database.jdbc;
 
-import com.alpdurmaz.logic.exceptions.MovieListUpdateException;
-import com.alpdurmaz.logic.exceptions.MovieNotFoundException;
+import com.alpdurmaz.logic.exception.exceptions.MovieListUpdateException;
+import com.alpdurmaz.logic.exception.exceptions.MovieNotFoundException;
 import com.alpdurmaz.logic.movie.Movie;
 import com.alpdurmaz.logic.movie.MovieRepository;
-import com.alpdurmaz.presentation.exception.exceptions.RestServiceMovieSearchException;
-import com.alpdurmaz.presentation.restservice.model.MovieAPI;
-import com.alpdurmaz.presentation.restservice.model.MovieDetailAPI;
+import com.alpdurmaz.presentation.exceptions.RestServiceMovieSearchException;
+import com.alpdurmaz.presentation.restservice.models.restmodels.MovieAPI;
+import com.alpdurmaz.presentation.restservice.models.restmodels.MovieDetailAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;

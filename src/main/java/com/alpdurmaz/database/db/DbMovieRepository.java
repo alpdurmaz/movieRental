@@ -2,7 +2,7 @@ package com.alpdurmaz.database.db;
 /*
 import com.alpdurmaz.logic.movie.Movie;
 import com.alpdurmaz.logic.movie.MovieRepository;
-import com.alpdurmaz.presentation.restservice.model.MovieAPI;
+import com.alpdurmaz.presentation.restservice.models.restmodels.MovieAPI;
 
 
 import java.sql.PreparedStatement;
