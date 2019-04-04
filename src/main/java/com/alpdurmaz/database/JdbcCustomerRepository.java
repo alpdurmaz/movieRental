@@ -1,4 +1,4 @@
-package com.alpdurmaz.database.jdbc;
+package com.alpdurmaz.database;
 
 import com.alpdurmaz.logic.customer.Customer;
 import com.alpdurmaz.logic.customer.CustomerRepository;

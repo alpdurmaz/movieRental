@@ -1,10 +1,9 @@
-package com.alpdurmaz.presentation.restservice.jwtsecurity;
+package com.alpdurmaz.logic.security.jwtsecurity;
 
 import com.alpdurmaz.presentation.restservice.models.jwtmodels.JwtAuthenticationToken;
 import com.alpdurmaz.presentation.restservice.models.jwtmodels.JwtUser;
 import com.alpdurmaz.presentation.restservice.models.jwtmodels.JwtUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.core.AuthenticationException;

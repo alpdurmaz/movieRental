@@ -1,11 +1,8 @@
 package com.alpdurmaz.configuration;
 
-
-import com.alpdurmaz.presentation.restservice.jwtsecurity.JwtAuthenticationEntryPoint;
-import com.alpdurmaz.presentation.restservice.jwtsecurity.JwtAuthenticationProvider;
-import com.alpdurmaz.presentation.restservice.jwtsecurity.JwtAuthenticationTokenFilter;
-import com.alpdurmaz.presentation.restservice.jwtsecurity.JwtSuccessHandler;
-import com.alpdurmaz.presentation.web.websecurity.WebAuthenticationProvider;
+import com.alpdurmaz.logic.security.jwtsecurity.JwtAuthenticationProvider;
+import com.alpdurmaz.logic.security.jwtsecurity.JwtAuthenticationTokenFilter;
+import com.alpdurmaz.logic.security.jwtsecurity.JwtSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import com.alpdurmaz.logic.security.websecurity.*;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
@@ -45,8 +43,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtAuthenticationProvider jwtAuthenticationProvider;
-    @Autowired
-    private JwtAuthenticationEntryPoint entryPoint;
 
     @Bean
     public AuthenticationManager authenticationManager() {

@@ -2,7 +2,7 @@ package com.alpdurmaz.presentation.restservice.controller;
 
 import com.alpdurmaz.logic.user.User;
 import com.alpdurmaz.logic.user.UserService;
-import com.alpdurmaz.presentation.restservice.jwtsecurity.JwtGenerator;
+import com.alpdurmaz.logic.security.jwtsecurity.JwtGenerator;
 import com.alpdurmaz.presentation.restservice.models.jwtmodels.JwtUser;
 import com.alpdurmaz.presentation.web.controller.HomeController;
 import org.slf4j.Logger;

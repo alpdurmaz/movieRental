@@ -1,4 +1,4 @@
-package com.alpdurmaz.presentation.web.websecurity;
+package com.alpdurmaz.logic.security.websecurity;
 
 import com.alpdurmaz.logic.user.User;
 import com.alpdurmaz.logic.user.UserService;

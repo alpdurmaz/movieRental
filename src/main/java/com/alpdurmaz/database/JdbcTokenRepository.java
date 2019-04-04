@@ -1,4 +1,4 @@
-package com.alpdurmaz.database.jdbc;
+package com.alpdurmaz.database;
 
 import com.alpdurmaz.presentation.exceptions.NoTokenFoundException;
 import com.alpdurmaz.logic.user.User;

@@ -1,4 +1,4 @@
-package com.alpdurmaz.database.jdbc;
+package com.alpdurmaz.database;
 
 import com.alpdurmaz.logic.exception.exceptions.MovieRentFailedException;
 import com.alpdurmaz.logic.exception.exceptions.MovieReturnFailedException;

@@ -1,4 +1,4 @@
-package com.alpdurmaz.database.jdbc;
+package com.alpdurmaz.database;
 
 import com.alpdurmaz.logic.exception.exceptions.MovieListUpdateException;
 import com.alpdurmaz.logic.exception.exceptions.MovieNotFoundException;

@@ -1,4 +1,4 @@
-package com.alpdurmaz.presentation.restservice.jwtsecurity;
+package com.alpdurmaz.logic.security.jwtsecurity;
 
 import com.alpdurmaz.presentation.restservice.models.jwtmodels.JwtAuthenticationToken;
 import org.springframework.security.core.Authentication;

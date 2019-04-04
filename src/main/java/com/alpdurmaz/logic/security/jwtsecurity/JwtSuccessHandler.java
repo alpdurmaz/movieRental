@@ -1,4 +1,4 @@
-package com.alpdurmaz.presentation.restservice.jwtsecurity;
+package com.alpdurmaz.logic.security.jwtsecurity;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
