@@ -1,6 +1,5 @@
 package com.alpdurmaz.logic.rental;
 
-import com.alpdurmaz.presentation.web.model.ReturnMovieRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,20 +11,20 @@ public class RentalService {
     @Autowired
     private RentalRepository rentalRepository;
 
-    public void rentMovie(int userId, int movieId){
+    public void rentMovie(int userId, int movieId) {
 
         rentalRepository.rentMovie(userId, movieId);
     }
 
-    public void returnRentedMovie(int userId, int movieId){
+    public void returnRentedMovie(int userId, int movieId) {
         rentalRepository.returnRentedMovie(userId, movieId);
     }
 
-    public void returnRentedMovie(List<Integer>list){
+    public void returnRentedMovie(List<Integer> list) {
         rentalRepository.returnRentedMovie(list);
     }
 
-    public List<Rental> getRentals(String customerName){
+    public List<Rental> getRentals(String customerName) {
         return rentalRepository.getRentals(customerName);
     }
 }

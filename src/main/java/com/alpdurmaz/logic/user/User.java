@@ -3,16 +3,11 @@ package com.alpdurmaz.logic.user;
 import com.alpdurmaz.logic.userrole.Role;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Data
 @Entity

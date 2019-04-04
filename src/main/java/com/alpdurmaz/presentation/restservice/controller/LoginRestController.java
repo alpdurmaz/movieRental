@@ -29,7 +29,7 @@ public class LoginRestController {
     @PostMapping("/gettoken")
     public String getToken(@RequestBody final JwtUser jwtUser){
 
-        logger.info("sadasdasdada" + jwtUser.getEmail());
+        logger.info("USER LOGIN IN " + jwtUser.getEmail());
 
         User user = userService.findByEmail(jwtUser.getEmail());
 

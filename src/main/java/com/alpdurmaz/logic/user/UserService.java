@@ -1,6 +1,5 @@
 package com.alpdurmaz.logic.user;
 
-
 import com.alpdurmaz.logic.userrole.Role;
 import com.alpdurmaz.logic.userrole.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;

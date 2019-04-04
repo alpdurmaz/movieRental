@@ -1,7 +1,6 @@
 package com.alpdurmaz.logic.userrole;
 
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 

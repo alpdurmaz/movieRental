@@ -24,6 +24,7 @@ public class MovieService {
     }
 
     public void insertMovie(String title){
+
         movieRepository.insertMovie(title);
     }
 

@@ -1,12 +1,8 @@
 package com.alpdurmaz.presentation.web.controller;
 
-
-import com.alpdurmaz.logic.customer.CustomerService;
 import com.alpdurmaz.logic.movie.Movie;
 import com.alpdurmaz.logic.movie.MovieService;
-import com.alpdurmaz.logic.rental.Rental;
 import com.alpdurmaz.logic.rental.RentalService;
-import com.alpdurmaz.logic.user.User;
 import com.alpdurmaz.logic.user.UserService;
 import com.alpdurmaz.presentation.web.model.RentalRequest;
 import com.alpdurmaz.presentation.web.model.ReturnMovieRequest;
@@ -29,9 +25,6 @@ public class HomeController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private CustomerService customerService;
 
     @Autowired
     private MovieService movieService;
