@@ -60,7 +60,7 @@ public class Rental {
 
     @Override
     public String toString() {
-        return "Rental{" +
+        return "RentalRequestRestObject{" +
                 "email='" + email + '\'' +
                 ", movieTitle='" + movieTitle + '\'' +
                 ", rentalDate='" + rentalDate + '\'' +

@@ -74,16 +74,12 @@ public class JdbcMovieRepository implements MovieRepository {
     @Override
     public MovieDetailAPI getMovieDetail(String title) {
 
-        MovieDetailAPI movieDetailAPI = new MovieDetailAPI();
-
         try {
-            restTemplate.getForObject("http://www.omdbapi.com/?t=" + title + "&apikey=ec66d13", MovieDetailAPI.class);
+            return restTemplate.getForObject("http://www.omdbapi.com/?t=" + title + "&apikey=ec66d13", MovieDetailAPI.class);
         }
         catch (RestClientException rce){
             throw new RestServiceMovieSearchException("Movie Not Found in Rest Service!", rce);
         }
-
-        return movieDetailAPI;
     }
 
     @Override

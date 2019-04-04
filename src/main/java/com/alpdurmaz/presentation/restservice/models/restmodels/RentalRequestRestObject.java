@@ -1,16 +1,16 @@
 package com.alpdurmaz.presentation.restservice.models.restmodels;
 
-public class Rental {
+public class RentalRequestRestObject {
 
     private int customerID;
     private int movieID;
 
-    public Rental(int customerID, int movieID) {
+    public RentalRequestRestObject(int customerID, int movieID) {
         this.customerID = customerID;
         this.movieID = movieID;
     }
 
-    public Rental() {
+    public RentalRequestRestObject() {
     }
 
     public int getCustomerID() {

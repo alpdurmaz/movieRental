@@ -115,7 +115,7 @@ public class JdbcRentalRepository implements RentalRepository {
                                     "WHERE R_M_ID=M_ID AND R_C_ID=user_id AND email=:customerName AND R_RETURN_DATE=:returnDate",
                             mapSqlParameterSource, rentalsRowMapper);
         }catch (DataAccessException dae){
-            throw new RentalListException("Rental List Not Found", dae);
+            throw new RentalListException("RentalRequestRestObject List Not Found", dae);
         }
     }
 }

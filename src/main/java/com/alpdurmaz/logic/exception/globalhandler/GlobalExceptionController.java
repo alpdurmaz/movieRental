@@ -1,7 +1,6 @@
 package com.alpdurmaz.logic.exception.globalhandler;
 
 import com.alpdurmaz.logic.exception.exceptions.*;
-import com.alpdurmaz.presentation.exceptions.NoTokenFoundException;
 import com.alpdurmaz.presentation.exceptions.RestServiceMovieSearchException;
 import com.alpdurmaz.presentation.restservice.models.restmodels.ApiError;
 import org.slf4j.Logger;
@@ -22,8 +21,7 @@ import java.util.List;
 public class GlobalExceptionController {
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionController.class);
 
-   @ExceptionHandler({NoTokenFoundException.class
-           , RestServiceMovieSearchException.class
+   @ExceptionHandler({RestServiceMovieSearchException.class
            , MovieListUpdateException.class
            , MovieNotFoundException.class
            , MovieRentFailedException.class
@@ -37,13 +35,6 @@ public class GlobalExceptionController {
 
        HttpHeaders headers = new HttpHeaders();
 
-       if(ex instanceof NoTokenFoundException){
-           HttpStatus status = HttpStatus.NOT_FOUND;
-
-           NoTokenFoundException ntfe = (NoTokenFoundException)ex;
-
-           return handleNoTokenFoundException(ntfe, headers, status, webRequest);
-       }
 
        if(ex instanceof RestServiceMovieSearchException){
            HttpStatus status = HttpStatus.NOT_FOUND;
@@ -101,14 +92,10 @@ public class GlobalExceptionController {
            }
 
            HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-           return handleExceptionInternal((NoTokenFoundException) ex, null, headers, status, webRequest);
+           return handleExceptionInternal(ex, null, headers, status, webRequest);
        }
    }
 
-    protected ResponseEntity<ApiError> handleNoTokenFoundException(NoTokenFoundException ntfe, HttpHeaders headers, HttpStatus status, WebRequest webRequest) {
-       List<String> errors = Collections.singletonList(ntfe.getMessage());
-       return handleExceptionInternal(ntfe, new ApiError(errors), headers, status, webRequest);
-    }
 
     protected ResponseEntity<ApiError> handleRestServiceMovieSearchException(RestServiceMovieSearchException restSerMovSerException
             , HttpHeaders headers

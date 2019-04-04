@@ -12,7 +12,7 @@
 <body>
 
 <nav class="navbar navbar-light bg-light">
-    <form class="form-inline" action="#" th:action="@{/list-customer-rental}" th:object="${rental}" method="get">
+    <form class="form-inline" action="#" th:action="@{/list-customer-rentalRequestRestObject}" th:object="${rentalRequestRestObject}" method="get">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" th:field="*{email}">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
@@ -31,11 +31,11 @@
     <tr th:if="${rentalList.empty}">
         <td colspan="2"> You don`t have any movies to return.</td>
     </tr>
-    <tr th:each="rental : ${rentalList}">
-        <td><span th:text="${rental.email}"></span></td>
-        <td><span th:text="${rental.movieTitle}"></span></td>
-        <td><span th:text="${rental.rentalDate}"></span></td>
-        <td><span th:text="${rental.returnDate}"></span></td>
+    <tr th:each="rentalRequestRestObject : ${rentalList}">
+        <td><span th:text="${rentalRequestRestObject.email}"></span></td>
+        <td><span th:text="${rentalRequestRestObject.movieTitle}"></span></td>
+        <td><span th:text="${rentalRequestRestObject.rentalDate}"></span></td>
+        <td><span th:text="${rentalRequestRestObject.returnDate}"></span></td>
     </tr>
     </tbody>
 </table>

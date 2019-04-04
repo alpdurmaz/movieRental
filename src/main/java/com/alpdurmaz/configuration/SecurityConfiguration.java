@@ -4,6 +4,7 @@ import com.alpdurmaz.logic.security.jwtsecurity.JwtAuthenticationEntryPoint;
 import com.alpdurmaz.logic.security.jwtsecurity.JwtAuthenticationProvider;
 import com.alpdurmaz.logic.security.jwtsecurity.JwtAuthenticationTokenFilter;
 import com.alpdurmaz.logic.security.jwtsecurity.JwtSuccessHandler;
+import com.alpdurmaz.logic.security.websecurity.WebAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -15,11 +16,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import com.alpdurmaz.logic.security.websecurity.*;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
@@ -51,7 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationManager authenticationManager() {
-        return new ProviderManager(Arrays.asList(webAuthenticationProvider,jwtAuthenticationProvider));
+        return new ProviderManager(Arrays.asList(webAuthenticationProvider, jwtAuthenticationProvider));
     }
 
     @Bean
@@ -81,6 +80,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/login", "/error").permitAll()
+                .antMatchers("/gettoken").permitAll()
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
