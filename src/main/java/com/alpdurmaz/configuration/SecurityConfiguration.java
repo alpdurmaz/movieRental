@@ -1,18 +1,28 @@
 package com.alpdurmaz.configuration;
 
 
+import com.alpdurmaz.presentation.restservice.jwtsecurity.JwtAuthenticationEntryPoint;
+import com.alpdurmaz.presentation.restservice.jwtsecurity.JwtAuthenticationProvider;
+import com.alpdurmaz.presentation.restservice.jwtsecurity.JwtAuthenticationTokenFilter;
+import com.alpdurmaz.presentation.restservice.jwtsecurity.JwtSuccessHandler;
+import com.alpdurmaz.presentation.web.websecurity.WebAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -30,9 +40,31 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Value("${spring.queries.roles-query}")
     private String rolesQuery;
 
-    @Override
+    @Autowired
+    private WebAuthenticationProvider webAuthenticationProvider;
+
+    @Autowired
+    private JwtAuthenticationProvider jwtAuthenticationProvider;
+    @Autowired
+    private JwtAuthenticationEntryPoint entryPoint;
+
+    @Bean
+    public AuthenticationManager authenticationManager() {
+        return new ProviderManager(Arrays.asList(webAuthenticationProvider,jwtAuthenticationProvider));
+    }
+
+    @Bean
+    public JwtAuthenticationTokenFilter authenticationTokenFilter() {
+        JwtAuthenticationTokenFilter filter = new JwtAuthenticationTokenFilter();
+        filter.setAuthenticationManager(authenticationManager());
+        filter.setAuthenticationSuccessHandler(new JwtSuccessHandler());
+        return filter;
+    }
+
+    @Autowired
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
+
         auth.
                 jdbcAuthentication()
                 .usersByUsernameQuery(usersQuery)
@@ -58,14 +90,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/").and().exceptionHandling()
                 .accessDeniedPage("/access-denied");
+
+
+        http
+                .authorizeRequests().antMatchers("**/rest/**").authenticated();
+
+        http.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.headers().cacheControl();
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**")
-                .antMatchers("/api/**");
+                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
     }
 
 }
