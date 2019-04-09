@@ -28,17 +28,16 @@
             <td colspan="2">No Movies Available</td>
         </tr>
         <u1>
-            <tr th:each="rental: ${rentalList}">
-                <td><span th:text="${rental.email}">Customer Name</span></td>
-                <td><span th:text="${rental.movieTitle}">Movie Title</span></td>
-                <td><span th:text="${rental.rentalDate}">Rental Date</span></td>
-                <td><span th:text="${rental.returnDate}">Return Date</span></td>
+            <tr th:each="rentalRequestRestObject: ${rentalList}">
+                <td><span th:text="${rentalRequestRestObject.email}">Customer Name</span></td>
+                <td><span th:text="${rentalRequestRestObject.movieTitle}">Movie Title</span></td>
+                <td><span th:text="${rentalRequestRestObject.rentalDate}">Rental Date</span></td>
+                <td><span th:text="${rentalRequestRestObject.returnDate}">Return Date</span></td>
                 <td><div class="ui checkbox">
-                    <input type="checkbox"  th:field="*{rentalIdList}" th:value="${rental.rentalId}">
+                    <input type="checkbox"  th:field="*{rentalIdList}" th:value="${rentalRequestRestObject.rentalId}">
                 </div>
                 </td>
             </tr>
-
         </u1>
         </tbody>
     </table>
